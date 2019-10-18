@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Motion, spring } from 'react-motion';
 import $ from 'jquery';
 import sampleData from '../../sampleData.json';
-import { isAbsolute } from 'path';
+import axios from 'axios';
 
 const CarouselEntryWrapper = styled.div`
     position: absolute;
@@ -68,6 +68,15 @@ class Carousel extends React.Component {
             }
         }
         this.checkShifters(0);
+
+        axios.get("/items")
+        .then ((data) => {
+            console.log(data);
+        })
+        .catch ((err) => {
+            console.log("Uh-oh Spaghettios");
+            console.log(err);
+        })
     }
 
     render() {
@@ -81,8 +90,8 @@ class Carousel extends React.Component {
                         }}
                     >
                         {style => (
-                            <CarouselEntryWrapper left={style.left}>
-                                <CarouselEntry item={item}/>
+                            <CarouselEntryWrapper key={item.name + "a"} left={style.left}>
+                                <CarouselEntry key={item.name} item={item}/>
                             </CarouselEntryWrapper>
                         )}
                     </Motion>
