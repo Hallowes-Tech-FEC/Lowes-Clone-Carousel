@@ -3,11 +3,18 @@ const db = require('./db.js');
 
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/client"));
 
 app.get("/items", (req, res) => {
-    console.log(req.body);
-    res.end();
+    db.getItems("Lighting/Ceiling Fans", (err, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(data);
+        }
+    })
 });
 
 let port = 3000;

@@ -15,15 +15,14 @@ db.connect(function (err) {
     console.log('Connected to database');
 })
 
-const getItems = function(category) {
-    let queryString = "SELECT * FROM items WHERE categetoryId = (SELECT id FROM categories WHERE name = ?);";
+const getItems = function(category, callback) {
+    let queryString = "SELECT * FROM items WHERE categoryId = (SELECT id FROM categories WHERE name = ?);";
     let options = [category];
     db.query(queryString, options, (err, results, field) => {
         if (err) {
-            console.log("Error: " + err);
-            throw err;
+            callback(err, null);
         } else {
-            return results;
+            callback(null, results);
         }
     })
 }

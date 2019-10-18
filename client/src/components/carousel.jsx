@@ -48,6 +48,17 @@ class Carousel extends React.Component {
         }
     }
 
+    spawnDots(maxPositions) {
+        $(".dotSubContainer").empty();
+        for (let i = 0; i < maxPositions; i++) {
+            if (i === 0) {
+                $(".dotSubContainer").append('<span class="dot" style="background-color:royalblue;left:' + (20 * i) + 'px"></span>');  
+            } else {
+                $(".dotSubContainer").append('<span class="dot" style="left:' + (20 * i) + 'px"></span>');
+            }
+        }
+    }
+
     moveDots (newPosition) {
         let dots = $(".dotSubContainer").children();
         for (let i = 0; i < dots.length; i++) {
@@ -59,19 +70,24 @@ class Carousel extends React.Component {
         }
     }
 
-    componentDidMount () {
-        for (let i = 0; i < this.state.maxPositions; i++) {
-            if (i === 0) {
-                $(".dotSubContainer").append('<span class="dot" style="background-color:royalblue;left:' + (20 * i) + 'px"></span>');  
-            } else {
-                $(".dotSubContainer").append('<span class="dot" style="left:' + (20 * i) + 'px"></span>');
-            }
+    changeItems (items) {
+        if (items.length > 10) {
+            let newStartingIndex = Math.floor(Math.random() * (items.length - 10));
+            items = items.slice(newStartingIndex, newStartingIndex + 10);
         }
+        this.setState({
+            items: items,
+            currentPosition: 0,
+            maxPositions: Math.floor(items.length / 2)
+        })
+        this.spawnDots(Math.floor(items.length / 2));
         this.checkShifters(0);
+    }
 
+    componentDidMount () {
         axios.get("/items")
         .then ((data) => {
-            console.log(data);
+            this.changeItems(data.data);
         })
         .catch ((err) => {
             console.log("Uh-oh Spaghettios");
@@ -88,10 +104,11 @@ class Carousel extends React.Component {
                         style={{
                             left: spring((index - this.state.currentPosition) * 235)
                         }}
+                        key={index + "c"}
                     >
                         {style => (
-                            <CarouselEntryWrapper key={item.name + "a"} left={style.left}>
-                                <CarouselEntry key={item.name} item={item}/>
+                            <CarouselEntryWrapper key={index + "a"} left={style.left}>
+                                <CarouselEntry key={index + "b"} item={item}/>
                             </CarouselEntryWrapper>
                         )}
                     </Motion>
