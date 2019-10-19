@@ -1,9 +1,16 @@
-@media only screen and (min-width: 601px) {
+@media only screen and (min-width: 401px) {
     #box {
         position: fixed;
         left: 140px;
     }   
 
+    #carousel {
+        position: absolute;
+        width: 1035px;
+        height: 600px;
+        overflow: hidden;
+    }
+    
     .carouselShifter {
         position: absolute;
         top: 80px;
@@ -22,6 +29,7 @@
 
     .carouselEntry {
         position: absolute;
+        display: inline-block;
         width: 225px;
         height: 440px;
     }
@@ -56,27 +64,28 @@
         top: 325px;
         height: 50px;
     }
+
+    .carouselButton {
+        position: absolute;
+        background-color: green;
+        color: white;
+        font-size: 15px;
+        top: 395px;
+        height: 45px;
+        width: 225px;
+    }
+
+    .dotContainer {
+        position: absolute;
+        top: 435px;
+        left: 500px;
+        height: 10px;
+        text-align: center;
+    }
 }
 
 button:focus {
     outline: none;
-}
-
-#carousel {
-    position: absolute;
-    width: 1035px;
-    height: 600px;
-    overflow: hidden;
-}
-
-.carouselButton {
-    position: absolute;
-    background-color: green;
-    color: white;
-    font-size: 15px;
-    top: 395px;
-    height: 45px;
-    width: 225px;
 }
 
 .carouselButton:hover {
@@ -94,21 +103,6 @@ button:focus {
     color: #383838;
 }
 
-.margin {
-    position: absolute;
-    background-color: white;
-    height: 500px;
-    width: 180px;
-}
-
-.dotContainer {
-    position: absolute;
-    top: 435px;
-    left: 500px;
-    height: 10px;
-    text-align: center;
-}
-
 .dotSubContainer {
     display: inline-block;
 }
@@ -121,16 +115,18 @@ button:focus {
     border-radius: 10px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 400px) {
+
     #box {
         position: fixed;
-        left: 20px;
+        left: 2vw;
+        width: 96vw;
     }
 
     #carousel {
         position: absolute;
-        width: (screen-width - 40)px;
-        height: 600px;
+        width: 100%;
+        height: 60vw;
         overflow: hidden;
     }
 
@@ -140,8 +136,9 @@ button:focus {
 
     .carouselEntry {
         position: absolute;
-        width: 100px;
-        height: 440px;
+        display: inline-block;
+        width: 29vw;
+        height: 46vw;
         text-align: center;
     }
     
@@ -149,29 +146,40 @@ button:focus {
         position: absolute;
         object-fit: cover;
         top: 0px;
-        height: 100px;
-        width: 100px;
+        height: 29vw;
+        width: 29vw;
         display: inline-block;
     }
     
     .carouselTitle {
         position: absolute;
-        top: 230px;
-        height: 45px;
+        font-family: "Arial", Helvetica, sans-serif;
+        font-size: 10px;
+        top: 30vw;
+        height: 8.5vw;
+        width: 29vw;
         color: #383838;
     }
     
     .carouselRating {
         position: absolute;
-        top: 275px;
-        height: 50px;
+        top: 40vw;
         color: #383838;
     }
     
     .carouselPrice {
+        visibility: hidden;
+    }
+
+    .carouselButton {
+        visibility: hidden;
+    }
+
+    .dotContainer {
         position: absolute;
-        top: 325px;
-        height: 50px;
-        color: #383838;
+        top: 48vw;
+        left: 40vw;
+        height: 10px;
+        text-align: center;
     }
 }

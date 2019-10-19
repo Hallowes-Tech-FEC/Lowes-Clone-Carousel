@@ -2,6 +2,7 @@ import React from 'react';
 import CarouselEntry from './carouselEntry.jsx';
 import styled from 'styled-components';
 import { Motion, spring } from 'react-motion';
+import { Swipeable } from 'react-swipeable';
 import $ from 'jquery';
 import sampleData from '../../sampleData.json';
 import axios from 'axios';
@@ -96,26 +97,44 @@ class Carousel extends React.Component {
     }
 
     render() {
+        let spaceBetweenEntries;
+        if (screen.width > 600) {
+            spaceBetweenEntries = 235;
+        } else {
+            spaceBetweenEntries = screen.width / 3.3;
+        }
         return (
             <div id="carousel">
-                {this.state.items.map((item, index) => (                                       
-                    <Motion
-                        defaultStyle={{left: (index - this.state.currentPosition) * 235}}
-                        style={{
-                            left: spring((index - this.state.currentPosition) * 235)
-                        }}
-                        key={index + "c"}
-                    >
-                        {style => (
-                            <CarouselEntryWrapper key={index + "a"} left={style.left}>
-                                <CarouselEntry key={index + "b"} item={item}/>
-                            </CarouselEntryWrapper>
-                        )}
-                    </Motion>
-                ))}
-                <button className="carouselShifter" id="shifterLeft" onClick={this.moveLeft.bind(this)} style={{position: "absolute"}}>{"<"}</button>
-                <button className="carouselShifter" id="shifterRight" onClick={this.moveRight.bind(this)} style={{position: "absolute", left: "1000px"}}>{">"}</button>
-
+                <Swipeable
+                    onSwipedRight={() => {
+                        if (this.state.currentPosition > 0) {
+                            this.moveLeft.call(this)
+                        }
+                    }}
+                    onSwipedLeft={() => {
+                        if (this.state.currentPosition / 2 < this.state.maxPositions) {
+                            this.moveRight.call(this)
+                        }
+                    }}
+                >
+                    {this.state.items.map((item, index) => (
+                        <Motion
+                            defaultStyle={{left: (index - this.state.currentPosition) * spaceBetweenEntries}}
+                            style={{
+                                left: spring((index - this.state.currentPosition) * spaceBetweenEntries)
+                            }}
+                            key={index.toString()}
+                        >
+                            {style => (
+                                <CarouselEntryWrapper key={index.toString()} left={style.left}>
+                                    <CarouselEntry key={index.toString()} item={item}/>
+                                </CarouselEntryWrapper>
+                            )}
+                        </Motion>
+                    ))}
+                    <button className="carouselShifter" id="shifterLeft" onClick={this.moveLeft.bind(this)} style={{position: "absolute"}}>{"<"}</button>
+                    <button className="carouselShifter" id="shifterRight" onClick={this.moveRight.bind(this)} style={{position: "absolute", left: "1000px"}}>{">"}</button>
+                </Swipeable>
                 <div className="dotContainer">
                     <div className="dotSubContainer"></div>
                 </div>
