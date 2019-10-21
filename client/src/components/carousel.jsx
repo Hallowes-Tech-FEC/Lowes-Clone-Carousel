@@ -6,12 +6,21 @@ import { Swipeable } from 'react-swipeable';
 import $ from 'jquery';
 import sampleData from '../../sampleData.json';
 import axios from 'axios';
+import { isAbsolute } from 'path';
 
-const CarouselEntryWrapper = styled.div`
+// const CarouselEntryWrapper = styled.div`
+//     position: absolute;
+//     width: 225px;
+//     height: 440px;
+//     left: ${props => props.left}px;
+// `
+
+const CarouselEntryWrapper = styled.div.attrs({
+    style: ({left}) => ({left: left + "px"})
+})`
     position: absolute;
     width: 225px;
     height: 440px;
-    left: ${props => props.left}px;
 `
 
 class Carousel extends React.Component {
@@ -22,18 +31,25 @@ class Carousel extends React.Component {
             currentPosition: 0,
             maxPositions: Math.floor(sampleData.length / 2)
         }
+        this.displayedItems = sampleData.slice(0, 6);
     }
 
     moveLeft () {
         this.moveDots(this.state.currentPosition / 2 - 1);
         this.checkShifters(this.state.currentPosition / 2 - 1);
-        this.setState({currentPosition: this.state.currentPosition - 2});
+        this.setState({
+            displayedItems: this.state.items.slice(this.state.currentPosition - 2, this.state.currentPosition + 4),
+            currentPosition: this.state.currentPosition - 2}
+        );
     }
 
     moveRight () {
         this.moveDots(this.state.currentPosition / 2 + 1);
         this.checkShifters(this.state.currentPosition / 2 + 1);
-        this.setState({currentPosition: this.state.currentPosition + 2});
+        this.setState({
+            displayedItems: this.state.items.slice(this.state.currentPosition, this.state.currentPosition + 8),
+            currentPosition: this.state.currentPosition + 2
+        });
     }
 
     checkShifters (newPosition) {
@@ -78,6 +94,7 @@ class Carousel extends React.Component {
         }
         this.setState({
             items: items,
+            displayedItems: items.slice(0, 4),
             currentPosition: 0,
             maxPositions: Math.floor(items.length / 2)
         })
@@ -97,15 +114,16 @@ class Carousel extends React.Component {
     }
 
     render() {
-        let spaceBetweenEntries;
+        this.spaceBetweenEntries;
         if (screen.width > 600) {
-            spaceBetweenEntries = 235;
+            this.spaceBetweenEntries = 235;
         } else {
-            spaceBetweenEntries = screen.width / 3.3;
+            this.spaceBetweenEntries = screen.width / 3.3;
         }
         return (
             <div id="carousel">
                 <Swipeable
+                    id="carouselImages"
                     onSwipedRight={() => {
                         if (this.state.currentPosition > 0) {
                             this.moveLeft.call(this)
@@ -119,9 +137,9 @@ class Carousel extends React.Component {
                 >
                     {this.state.items.map((item, index) => (
                         <Motion
-                            defaultStyle={{left: (index - this.state.currentPosition) * spaceBetweenEntries}}
+                            defaultStyle={{left: (index - this.state.currentPosition) * this.spaceBetweenEntries}}
                             style={{
-                                left: spring((index - this.state.currentPosition) * spaceBetweenEntries)
+                                left: spring((index - this.state.currentPosition) * this.spaceBetweenEntries)
                             }}
                             key={index.toString()}
                         >
@@ -131,7 +149,8 @@ class Carousel extends React.Component {
                                 </CarouselEntryWrapper>
                             )}
                         </Motion>
-                    ))}
+                        )
+                    )}
                     <button className="carouselShifter" id="shifterLeft" onClick={this.moveLeft.bind(this)} style={{position: "absolute"}}>{"<"}</button>
                     <button className="carouselShifter" id="shifterRight" onClick={this.moveRight.bind(this)} style={{position: "absolute", left: "1000px"}}>{">"}</button>
                 </Swipeable>
