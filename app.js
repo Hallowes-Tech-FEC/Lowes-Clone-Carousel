@@ -1,8 +1,10 @@
 const express = require('express');
 const db = require('./db.js');
+const cors = require('cors');
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/client"));
@@ -17,7 +19,7 @@ app.get("/items", (req, res) => {
     })
 });
 
-let port = 3000;
+let port = 3001;
 app.listen(port, function (err) {
     if (err) {
         console.log(err);

@@ -20,20 +20,17 @@ module.exports = {
         }
       },
       {
-          test: /\.(css|less)$/,
+          test: /\.css$/,
           use: [
-            {
-              loader: MiniCssExtractPlugin.loader,
-              options: {
-                publicPath: '../'
-              }
-            },
+            "style-loader",
             "css-loader"
           ]
       }
     ]
   },
   plugins: [
-    new MiniCssExtractPlugin()
+    new MiniCssExtractPlugin({
+      filename: 'css.bundle.css',
+    })
   ]
 };
