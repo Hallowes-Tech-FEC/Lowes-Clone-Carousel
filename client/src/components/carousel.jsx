@@ -145,7 +145,7 @@ class Carousel extends React.Component {
                         )
                     )}
                     <button className="carouselShifter" id="shifterLeft" onClick={this.moveLeft.bind(this)} style={{position: "absolute"}}>{"<"}</button>
-                    <button className="carouselShifter" id="shifterRight" onClick={this.moveRight.bind(this)} style={{position: "absolute", left: "1000px"}}>{">"}</button>
+                    <button className="carouselShifter" id="shifterRight" onClick={this.moveRight.bind(this)} style={{position: "absolute", left: "1005px"}}>{">"}</button>
                 </Swipeable>
                 <div className="dotContainer">
                     <div className="dotSubContainer"></div>

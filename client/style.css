@@ -6,7 +6,7 @@
 
     #carouselWrapper {
         position: absolute;
-        width: 1035px;
+        width: 1040px;
         height: 600px;
         overflow: hidden;
     }
@@ -77,7 +77,7 @@
 
     .dotContainer {
         position: absolute;
-        top: 435px;
+        top: 445px;
         left: 500px;
         height: 10px;
         text-align: center;
