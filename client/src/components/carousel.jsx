@@ -6,14 +6,7 @@ import { Swipeable } from 'react-swipeable';
 import $ from 'jquery';
 import sampleData from '../../sampleData.json';
 import axios from 'axios';
-import { isAbsolute } from 'path';
-
-// const CarouselEntryWrapper = styled.div`
-//     position: absolute;
-//     width: 225px;
-//     height: 440px;
-//     left: ${props => props.left}px;
-// `
+import "../../style.css";
 
 const CarouselEntryWrapper = styled.div.attrs({
     style: ({left}) => ({left: left + "px"})
@@ -103,7 +96,7 @@ class Carousel extends React.Component {
     }
 
     componentDidMount () {
-        axios.get("/items")
+        axios.get("http://feccarousel.us-east-2.elasticbeanstalk.com/items")
         .then ((data) => {
             this.changeItems(data.data);
         })
@@ -121,7 +114,7 @@ class Carousel extends React.Component {
             this.spaceBetweenEntries = screen.width / 3.3;
         }
         return (
-            <div id="carousel">
+            <div id="carouselWrapper">
                 <Swipeable
                     id="carouselImages"
                     onSwipedRight={() => {
@@ -152,7 +145,7 @@ class Carousel extends React.Component {
                         )
                     )}
                     <button className="carouselShifter" id="shifterLeft" onClick={this.moveLeft.bind(this)} style={{position: "absolute"}}>{"<"}</button>
-                    <button className="carouselShifter" id="shifterRight" onClick={this.moveRight.bind(this)} style={{position: "absolute", left: "1000px"}}>{">"}</button>
+                    <button className="carouselShifter" id="shifterRight" onClick={this.moveRight.bind(this)} style={{position: "absolute", left: "1005px"}}>{">"}</button>
                 </Swipeable>
                 <div className="dotContainer">
                     <div className="dotSubContainer"></div>
