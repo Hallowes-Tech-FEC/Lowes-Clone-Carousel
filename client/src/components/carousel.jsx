@@ -80,6 +80,10 @@ class Carousel extends React.Component {
         }
     }
 
+    changeItem (itemId) {
+        console.log("And now we'll change the image: " + itemId);
+    }
+
     changeItems (items) {
         if (items.length > 10) {
             let newStartingIndex = Math.floor(Math.random() * (items.length - 10));
@@ -138,14 +142,14 @@ class Carousel extends React.Component {
                         >
                             {style => (
                                 <CarouselEntryWrapper key={index.toString()} left={style.left}>
-                                    <CarouselEntry key={index.toString()} item={item}/>
+                                    <CarouselEntry key={index.toString()} item={item} changeItem={this.changeItem.bind(this)}/>
                                 </CarouselEntryWrapper>
                             )}
                         </Motion>
                         )
                     )}
                     <button className="carouselShifter" id="shifterLeft" onClick={this.moveLeft.bind(this)} style={{position: "absolute"}}>{"<"}</button>
-                    <button className="carouselShifter" id="shifterRight" onClick={this.moveRight.bind(this)} style={{position: "absolute", left: "1005px"}}>{">"}</button>
+                    <button className="carouselShifter" id="shifterRight" onClick={this.moveRight.bind(this)} style={{position: "absolute", left: "996.06px"}}>{">"}</button>
                 </Swipeable>
                 <div className="dotContainer">
                     <div className="dotSubContainer"></div>
