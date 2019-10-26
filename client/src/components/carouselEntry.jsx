@@ -6,8 +6,15 @@ const CarouselEntry = props => {
 
     return (
         <div>
-            <img src={props.item.picture} className="carouselPhoto"></img>
-            <div className="carouselTitle">
+            <img
+                src={props.item.picture}
+                className="carouselPhoto"
+                onClick={() => {props.changeItem(props.item.id)}}
+            ></img>
+            <div
+                className="carouselTitle"
+                onClick={() => {props.changeItem(props.item.id)}}
+            >
                 <strong>{props.item.name}</strong>
             </div>
             <div className="carouselRating">
@@ -17,6 +24,7 @@ const CarouselEntry = props => {
                     <span>&#9734;</span>
                     <span>&#9734;</span>
                     <span>&#9734;</span>
+                      ({props.item.numReviews})
                 </div>
                 <div className="filledInStars" style={{
                     width: ratingWidth
@@ -31,7 +39,7 @@ const CarouselEntry = props => {
             <div className="carouselPrice">
                 <strong>${props.item.price}</strong>
             </div>
-            <button className="carouselButton">ADD TO CART</button>
+            <button className="carouselButton" onClick={props.addToCart}>ADD TO CART</button>
         </div>
     )
 }

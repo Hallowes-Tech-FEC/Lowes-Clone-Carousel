@@ -15,9 +15,9 @@ db.connect(function (err) {
     console.log('Connected to database');
 })
 
-const getItems = function(category, callback) {
-    let queryString = "SELECT * FROM items WHERE categoryId = (SELECT id FROM categories WHERE name = ?);";
-    let options = [category];
+const getItems = function(itemId, callback) {
+    let queryString = "SELECT * FROM items WHERE categoryId = (SELECT categoryId FROM items WHERE id = ?);";
+    let options = [itemId];
     db.query(queryString, options, (err, results, field) => {
         if (err) {
             callback(err, null);
@@ -28,3 +28,15 @@ const getItems = function(category, callback) {
 }
 
 module.exports.getItems = getItems;
+
+// const getCategory = function (itemId, callback) {
+    //     let queryString = "SELECT categoryId FROM items WHERE id = ?;";
+    //     let options = [itemId];
+    //     db.query(queryString, options, (err, results, field) => {
+    //         if (err) {
+    //             callback (err, null);
+    //         } else {
+    //             callback (null, results);
+    //         }
+    //     })
+    // }
