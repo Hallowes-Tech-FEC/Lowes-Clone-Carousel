@@ -24,6 +24,7 @@ const CarouselEntry = props => {
                     <span>&#9734;</span>
                     <span>&#9734;</span>
                     <span>&#9734;</span>
+                      ({props.item.numReviews})
                 </div>
                 <div className="filledInStars" style={{
                     width: ratingWidth
@@ -38,7 +39,7 @@ const CarouselEntry = props => {
             <div className="carouselPrice">
                 <strong>${props.item.price}</strong>
             </div>
-            <button className="carouselButton">ADD TO CART</button>
+            <button className="carouselButton" onClick={props.addToCart}>ADD TO CART</button>
         </div>
     )
 }

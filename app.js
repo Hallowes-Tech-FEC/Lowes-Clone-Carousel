@@ -9,8 +9,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/client"));
 
-app.get("/items", (req, res) => {
-    db.getItems("Lighting/Ceiling Fans", (err, data) => {
+app.post("/items", (req, res) => {
+    db.getItems(req.body.itemId, (err, data) => {
         if (err) {
             res.send(err);
         } else {
@@ -27,3 +27,15 @@ app.listen(port, function (err) {
         console.log("listening on port " + port);
     }
 });
+
+
+
+// app.post("/categories", (req, res) => {
+//     db.getCategory(req.body.itemId, (err, data) => {
+//         if (err) {
+//             res.send(err);
+//         } else {
+//             res.send(data);
+//         }
+//     })
+// })

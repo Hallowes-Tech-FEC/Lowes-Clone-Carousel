@@ -81,10 +81,21 @@ class Carousel extends React.Component {
     }
 
     changeItem (itemId) {
-        console.log("And now we'll change the image: " + itemId);
+        let event = new CustomEvent("changeItem", {detail: itemId});
+        window.dispatchEvent(event);
     }
 
-    changeItems (items) {
+    addToCart () {
+        let event = new CustomEvent("addToCart", {detail: 1});
+        window.dispatchEvent(event);
+    }
+
+    changeItems (items, currentItemId) {
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].id === currentItemId) {
+                items.splice(i, 1);
+            }
+        }
         if (items.length > 10) {
             let newStartingIndex = Math.floor(Math.random() * (items.length - 10));
             items = items.slice(newStartingIndex, newStartingIndex + 10);
@@ -100,9 +111,23 @@ class Carousel extends React.Component {
     }
 
     componentDidMount () {
-        axios.get("http://feccarousel.us-east-2.elasticbeanstalk.com/items")
-        .then ((data) => {
-            this.changeItems(data.data);
+        window.addEventListener("changeItem", (e) => {
+            axios.post("http://feccarousel.us-east-2.elasticbeanstalk.com/items", {
+                itemId: e.detail
+            })
+            .then ((res) => {
+                this.changeItems(res.data, e.detail)
+            })
+            .catch ((err) => {
+                console.log(err);
+            })
+        })
+
+        axios.post("http://feccarousel.us-east-2.elasticbeanstalk.com/items", {
+            itemId: 99
+        })
+        .then ((res) => {
+            this.changeItems(res.data);
         })
         .catch ((err) => {
             console.log("Uh-oh Spaghettios");
@@ -119,6 +144,7 @@ class Carousel extends React.Component {
         }
         return (
             <div id="carouselWrapper">
+                <div id="carDivider">Complete Your Look</div>
                 <Swipeable
                     id="carouselImages"
                     onSwipedRight={() => {
@@ -142,7 +168,12 @@ class Carousel extends React.Component {
                         >
                             {style => (
                                 <CarouselEntryWrapper key={index.toString()} left={style.left}>
-                                    <CarouselEntry key={index.toString()} item={item} changeItem={this.changeItem.bind(this)}/>
+                                    <CarouselEntry
+                                        key={index.toString()}
+                                        item={item}
+                                        changeItem={this.changeItem.bind(this)}
+                                        addToCart={this.addToCart.bind(this)}
+                                    />
                                 </CarouselEntryWrapper>
                             )}
                         </Motion>
