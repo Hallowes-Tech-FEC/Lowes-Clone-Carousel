@@ -39,7 +39,7 @@
     "react-responsive-carousel": "^3.1.50",
     "react-swipeable": "^5.4.0",
     "styled-components": "^4.4.0",
-    "webpack-cli": "^3.3.9"
+    "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.4",
